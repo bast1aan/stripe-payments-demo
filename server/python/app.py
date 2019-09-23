@@ -10,6 +10,9 @@ It has all the endpoints you need to accept payments.
 Python 3.6 or newer required.
 """
 
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
+
 import stripe
 import json
 import setup
@@ -18,7 +21,6 @@ import os
 from inventory import Inventory
 from stripe_types import Source
 from flask import Flask, render_template, jsonify, request, send_from_directory
-from dotenv import load_dotenv, find_dotenv
 
 static_dir = f'{os.path.abspath(os.path.join(__file__ ,"../../.."))}/public'
 app = Flask(__name__, static_folder=static_dir)
@@ -198,7 +200,6 @@ def retrieve_payment_intent_status(id):
 
 
 if __name__ == '__main__':
-    load_dotenv(find_dotenv())
     stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
     stripe.api_version = '2019-03-14'
     app.run()
